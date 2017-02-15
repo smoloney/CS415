@@ -179,7 +179,35 @@ def bin2dec1(n):
     else:
         temp1, temp2 = divide(n, [0,1,0,1])
         return bin2dec1(trim(temp1)) + map(trim(temp2))
+def expo(a, b):
+    if compare(b, [0]) == 0:
+        return [1]
+    c = [1]
+    b = reverse(b)
+    for i in range (len(b)):
+        c = mult(c, a)
+        print (c)
+        
+    return c
+def twoComplement(a):
+    for i in range (len(a)):
+        if a[i] & (1 << i):
+            a[i] = 1
+        else:
+            a[i] = 0
+            
+    return a
+    
+def problem1a(a, b ,c, d):
+    num1 = expo(dec2bin(a), dec2bin(b))
+    print ("Num1: ", bin2dec(num1
+    ))
+    num2 = expo(dec2bin(c), dec2bin(d))
+    print("Num2: " , bin2dec(num2))
+    num2 = twoComplement(num2)
+    print ("twocomplement num: ", num2)
+    print(bin2dec(add(num1, num2)))
+    
 
+problem1a(2, 2, 2, 2)
 
-
-print(Add(1, 1))
