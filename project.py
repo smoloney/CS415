@@ -238,7 +238,8 @@ def problem1a(a,b,c,d):
     cRaisedd = expo(c, d)
     if compare(aRaisedb, cRaisedd) == 2:
         remainder = sub(cRaisedd, aRaisedb)
-        print( bin2dec(remainder), "-")
+        r = "-" + str(bin2dec(remainder))
+        print(r)
     else:
         remainder = sub(aRaisedb, cRaisedd)
         print(bin2dec(remainder))
