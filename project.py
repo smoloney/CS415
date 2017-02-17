@@ -243,29 +243,6 @@ def problem1a(a,b,c,d):
     else:
         remainder = sub(aRaisedb, cRaisedd)
         print(bin2dec(remainder))
-        #remainder = sub(aRaisedb,cRaisedd)
-
-
-    #remainder = sub(aRaisedb,cRaisedd) if compare(aRaisedb, cRaisedd) == 
-
-
-def expo2(a, b):
- 
-    if(a == 1):
-        return [1]
-
-    a = dec2bin(a)
-
-    if(b == 1):
-        return a
-
-    c = a
-
-    for i in range(1, b):
-        c = mult(c,a)
-
-        
-    return c
 
 
 
@@ -304,7 +281,7 @@ def main():
             problem1b(a, b, c ,d)
 
     else:
-        a = int(input("Enter a number: "))
+        a = dec2bin(int(input("Enter a number: ")))
         problem1c(a)
 
 main()
