@@ -1,4 +1,6 @@
-
+#Authors: Sean Moloney and Jon Killinger
+#Class : CS 415
+#Assignment: Project 1
 
 # all the computations for HW 1 shall be done using binary arithmetic
 # only the user input and the final output will be in decimal.
