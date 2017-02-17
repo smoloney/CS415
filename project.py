@@ -248,7 +248,7 @@ def problem1a(a,b,c,d):
     #remainder = sub(aRaisedb,cRaisedd) if compare(aRaisedb, cRaisedd) == 
 
 
-def expo(a, b):
+def expo2(a, b):
  
     if(a == 1):
         return [1]
@@ -270,22 +270,37 @@ def expo(a, b):
 
 def problem1b(a, b, c, d):
     aRaisedb = expo(a, b)
-    print (bin2dec(aRaisedb))
     cRaisedd = expo(c, d)
     quotient, remainder = divide(aRaisedb, cRaisedd)
     print("Q:", bin2dec(quotient), "R:", bin2dec(remainder))
+
+
+def expo(a, b):
+    if b == dec2bin(1):
+        return a
+    if b == dec2bin(2):
+        return mult(a, a)
+    if(even(b)):
+        return expo(expo(a, div2(b)), [0,1])
+    else:
+        return mult(a,(expo(expo(a,div2(sub(b, [1]))),dec2bin(2))))
+
+
+
+
 def main():
     num = int(input("Press 1 for subtraction. \n Press 2 for division. \n Press 3 for exponentiation"))
-
+    
     if num == 1 or num == 2:
-        a = int(input("First number: "))
-        b = int(input("To the power of: "))
-        c = int(input ("Second number: "))
-        d = int(input("To the power of: "))
+        a = dec2bin(int(input("First number: ")))
+        b = dec2bin(int(input("To the power of: ")))
+        c = dec2bin(int(input ("Second number: ")))
+        d = dec2bin(int(input("To the power of: ")))
+
         if num == 1:
             problem1a(a, b, c, d)
         else:
-            problem1b(a, b, c, d)
+            problem1b(a, b, c ,d)
 
     else:
         a = int(input("Enter a number: "))
