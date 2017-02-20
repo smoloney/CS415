@@ -251,9 +251,39 @@ def problem1a(a,b,c,d):
 def problem1b(a, b, c, d):
     aRaisedb = expo(a, b)
     cRaisedd = expo(c, d)
+    
+    if compare(aRaisedb, cRaisedd) == 2:
+       print("Q: 1", "R: ", bin2dec(sub(cRaisedd, aRaisedb)))
+       return None
     quotient, remainder = divide(aRaisedb, cRaisedd)
     print("Q:", bin2dec(quotient), "R:", bin2dec(remainder))
 
+
+def fractAdd(p,q,r,s):
+    num = add(mult(p,s), mult(q,r))
+    den = mult(q,s)
+    return (num,den)
+
+def gcd(a, b):
+    if( zero(b) or (compare(a,b)==0)):
+        return a
+    if(compare(a,b)==2):
+        return gcd(b,a)
+    else:
+        quotient, remainder = divide(a,b)
+        return gcd(b, remainder)
+    
+def problem1c(a):
+    summedNum = [1]
+    summedDenom = [1]
+
+    for i in range(2,bin2dec(a)+1):
+        summedNum, summedDenom = fractAdd([1],dec2bin(i),summedNum,summedDenom)
+
+    g = gcd(summedNum,summedDenom)
+    (p1, q1) = divide(summedNum, g)
+    (p2, q2) = divide(summedDenom, g)
+    print(bin2dec(p1),bin2dec(p2))
 
 def expo(a, b):
     if b == dec2bin(1):
@@ -265,26 +295,28 @@ def expo(a, b):
     else:
         return mult(a,(expo(expo(a,div2(sub(b, [1]))),dec2bin(2))))
 
-
-
-
 def main():
-    num = int(input("Press 1 for subtraction. \n Press 2 for division. \n Press 3 for exponentiation"))
     
-    if num == 1 or num == 2:
-        a = dec2bin(int(input("First number: ")))
-        b = dec2bin(int(input("To the power of: ")))
-        c = dec2bin(int(input ("Second number: ")))
-        d = dec2bin(int(input("To the power of: ")))
+    end = 1
+    while(end != 0):
+        num = int(input("Press 1 for subtraction. \n Press 2 for division. \n Press 3 for problem1c.\n Press 0 to quit."))
+        
+        if num == 1 or num == 2:
+            a = dec2bin(int(input("First number: ")))
+            b = dec2bin(int(input("To the power of: ")))
+            c = dec2bin(int(input ("Second number: ")))
+            d = dec2bin(int(input("To the power of: ")))
 
-        if num == 1:
-            problem1a(a, b, c, d)
+            if num == 1:
+                problem1a(a, b, c, d)
+            else:
+                problem1b(a, b, c ,d)
+
+        elif num == 3:
+            a = dec2bin(int(input("Enter a number: ")))
+            problem1c(a)
         else:
-            problem1b(a, b, c ,d)
-
-    else:
-        a = dec2bin(int(input("Enter a number: ")))
-        problem1c(a)
+            sys.exit()
 
 main()
 
