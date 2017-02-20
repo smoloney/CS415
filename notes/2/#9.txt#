@@ -1,0 +1,91 @@
+NOTES 2/9
+
+Problem 2:
+	function p2:
+	input: List L of o's and 1s
+	output List l1 of the 0's and 1's such that L1 is the bin rep of the # of 1's in L
+
+	l1 = []
+	for each i in l:
+	    if i == 1:
+	       incremenet(l1)
+
+	 function increment:
+	 input: list L
+	 output L incremented
+	 index = 0;
+	 while (index < length(l) && L[index] == 1)
+	       L[index] = 0;
+	       index++;
+
+
+	  if index < length (L):
+	     L[index] = 1
+	  else
+	  L.append(1)
+
+# of bit operations:
+
+n/2* 1 + n/4 * 2 + n/8 *3 + ...
+
+2 ^k-1 * 1 + 2^k-2 * 2 + 2^(k-3) * 3 + ... 2^0 *k
+
+
+Given a and b  (a, b >= 1)
+
+find x such that a*x == 1(mod b)
+x is called the inverse of a mod b
+fact: such an inverse exists if and only if the gcd (a, b) = 1
+Extended-euclid's algorithm given a and b finds x, y d such that ax + by = d
+
+since gcd (a,b) = 1, ax+by = y -> a*x == 1(mod b)
+
+extra condition: want x: 1 <= x< b-1
+
+
+function extended-euclid(a, b)
+input: two positive integers a and b with a >= b >= 0
+output: integers x, y , d such that d = gcd (a, b) and ax+by = d
+
+if b = 0: return (1, 0, a)
+(x', y' d) = extended-euclid(b, a mod b)
+return (y', x'- a/b y', d)
+
+
+find inverse of 23 mod 41
+gcd (41, 23)
+gcd (23, 18)	(9, -16, 1)
+gcd (18, 5)	(-7, 9, 1)
+gcd (5, 3)	(2, -7, 1)
+gcd (3, 2)	(-1, 2, 1)
+gcd (2, 1)	(1, - 1, 1)
+gcd (1, 0)  -> (0, 1 , 1)
+
+def modinv (a, n):
+// computes a^(-1) mod n
+(x, y, d , s) = egcd (a , n)
+if(compare( d, [1]) != 0):
+	    return []
+
+temp = mod (x, n)
+if s == 2:
+   return temp;
+else:
+	temp = sub(mult(add(quotent(x, n)[1]), x), x)
+	return temp
+
+
+
+
+
+Randomized algorithms
+given an array A contaarray such that  ining 1 million numbers, the array has not been sorted
+
+Goal: find and element x = A[j] of that x i sin the upper 50% among the keys of a
+
+Example: A = [12, 9, 10, 23,]'
+
+a determinitisc algorithm is required to examine at least half- million keys to answer question correctly
+
+Primality testing
+fermat's theorem: Let n be prime.  for any integer a, 1 < a < n, a^n-1 == 1(mod n)

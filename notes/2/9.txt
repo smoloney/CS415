@@ -1,0 +1,25 @@
+NOTES 2/9
+
+Problem 2:
+	function p2:
+	input: List L of o's and 1s
+	output List l1 of the 0's and 1's such that L1 is the bin rep of the # of 1's in L
+
+	l1 = []
+	for each i in l:
+	    if i == 1:
+	       incremenet(l1)
+
+	 function increment:
+	 input: list L
+	 output L incremented
+	 index = 0;
+	 while (index < length(l) && L[index] == 1)
+	       L[index] = 0;
+	       index++;
+
+
+	  if index < length (L):
+	     L[index] = 1
+	  else
+	  L.append(1)
