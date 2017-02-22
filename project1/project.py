@@ -2,6 +2,8 @@
 #Class : CS 415
 #Assignment: Project 1
 
+#In order to run this program, compile it wil python2 project.py
+
 # all the computations for HW 1 shall be done using binary arithmetic
 # only the user input and the final output will be in decimal.
 # the two functions dec2bin and bin2dec provide I/O conversion between
