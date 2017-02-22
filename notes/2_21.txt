@@ -1,0 +1,68 @@
+2-21 NOTES
+
+Public-key crpytography
+	   key ideas:
+	       Encrpytion(decryption) is easy if encrpytion(decrpyt) key is known
+
+	      encryption key does not eeveal the decryption key.  to find decryption key from
+	      decrpytion key from encryption key requees solving a hard problem
+	      		 ie factoring large numbers
+
+			   bijective one - to - one
+			   f: d -> d
+			   D = binary strings of length  n
+			   g = f^-1
+			    g (f(x)) = x
+			      	 V
+				 cypher text
+
+RSA algorithm
+    rsa scheme based on number theory
+    Property:
+	pick any two primes (p, q) and let N = p * q.  For any e relatvely prime to (p-1)(q-1)
+	1> the mapping x -> x^e mod N is a byjection on {0, 1... N -1 }
+	Moreover, the inverse mapping is easily realizd: let the inverse of e mod (p-1)(q-1) then for all x E {0, ... N -1}
+
+
+	gcd (p, q) = 1 then p has an inverse mod q
+
+prime generatr()
+      while trure
+      	    num = []
+	    num.append(1)
+	    for j in range (1, n-1)
+	     r = randin(0,1)
+	     num.append(r)
+	   num.append (1)
+	   prm = bin2dec(num)
+	   if fermattest(prm, k)
+	      return prm:
+
+
+rsa_key_gen(n, k):
+	       p = 1
+	       while(p % 3 != 2:
+	       	       p = primeGenerate(n, k)
+	       q = 1
+	       while q % 3 != 3
+	       	  q = primegen(n, k)
+		return p, q, mult(p, q)
+
+
+Bit level complexity of implementing rsa
+    bob choses public and secret keys
+    	stats by picking larg nbit random primes and q (O(kn^4)
+	public key is (N, e) where N = pq and e is a 2n-bit number realitively rime to (p-1)(q-1)...
+
+
+function fastfibmod( n, p):
+input: n, p -two k bit numbers
+output: fn mod p
+if n == 0:
+   return 0
+  if n == 1: return 1
+  m = [1 , 1
+       1,  0]
+
+matpow (M, n b):
+// fill in code
