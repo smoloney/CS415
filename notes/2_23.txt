@@ -1,0 +1,61 @@
+2-23 NOTES
+
+Quick select (rank problem) O(n)
+      input: array a of n numbers and k, i <= k <= n
+      output: k-th smallest element in a
+
+      find median  first
+      no error, but time complexity will fluxuate \
+
+
+2 integer multiplaction:
+  input: k bit integers a and b
+  output a * b
+
+FFT
+	input: two vectors u and v
+	output: w = u convolution u
+		      -polynomial math
+
+		      1 + x + x^2 -> [1, 1, 1, 0]
+		      1 - x   	->   [1, -1, 0, 0]
+		      1 - x ^3	->   [1, 0, 0, -1 ]
+
+		      2^/2 * x1 + x0
+		      2^n/2 * y1 + y0
+		      xy = (2^n/2 * x1 + x0)( 2^n/2 * y1 + y0) = 2^n * x1y1 + 2^n/2(x1y0 + x0y1) + x0y0
+
+		      x = 10010110
+		      	x0 = 0110 = 6
+			x1 = 1001 = 9
+			16 * 9 + 6 = 150
+
+			t1(n) = # of bit level operations performed by divide-and-conquer algorithm to compute the product of two n-bit numbers
+			t1(n) = 4 T 1(n/2) + theta (n)
+			      	    	   if n >= 2
+			        1 if n = 1
+
+				t1(n) = theta n^2
+
+Karatusba's algorithm
+	    add two 1/2n digit integers
+	    multiply 3 1/2 n-digit integrs
+	    add, sub and shift 1/2 n-digit integers to obtain result
+
+multipy:
+	input: n-bit positive i ntegers x and y
+	output: their product
+	if n = 1: return xy
+	xl, xr = leftmost [n/2], rightmost[n/2] bits of x
+	yl, yr = leftmost [n/2], rightmost[n/2] bits of y
+
+	P1 = multiple (xl, yl)
+	p2 = multiply (xr, yr)
+	p3 = multiply (xl + xr, yl + yr)
+	return P1 * 2^n + (p3-p10 3
+
+	bernoulli experiment
+	p (success) = 1/3
+	what is prob that the # of trials >= 3? q
+	q = 1 - prob(#of trials <= 2)
+	  = 1 - prob(# of trials = 1) + prob(# of trials = 2)
