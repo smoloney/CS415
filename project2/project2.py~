@@ -1,0 +1,19 @@
+def primality3(n, k):
+    a = True
+    for i in range(0, 2):
+        if a == False:
+            return False
+        a = div_check(n, 2)
+        a = div_check(n, 5)
+        a = div_check(n, 7)
+    return primality2(n,k)
+
+def primality2(n, k):
+    a = ['1']
+
+def div_check(n, a):
+    (q, r) = div(n, dec2bin(a))
+    if r != 0:
+        return False
+    else:
+        return True

@@ -1,0 +1,26 @@
+two representations of polynomils:
+    p(x) = a0, a1x + ... an-1 * x ^n-1
+    coeffiencent array
+    A [a0, a1, a2, ... , an-1]
+
+fast fourier transform
+     chose n values for x and corresponding values of y = p(x)
+     (x0,y0), (x1, y1) ... , (Xn-1,Yn-1) (multipoint evaluation)
+     if going in reverse order Inverse fourier transform or polnomial interpolation
+
+     horner's rule
+     	      ((An-1 * X0 + An-2) * X0 + An-2)
+
+	   input: Array[A0, A,1, .. An-1]
+	   output: p(X0) = A0+A1X0+A2X0^2+...An-1X^n-1
+	   	   temp = 0
+		   for j (n-1) to 1:
+		       temp = temp * a[j] + a[j-1]
+		    return temp;
+
+		    preform N multiplcations
+
+complex numbers
+	a number of the form a+ib where a and b are real numbers and i = sqrt(-1)
+
+e^itheta = cos(theta) + isin(theta)
