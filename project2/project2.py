@@ -95,13 +95,13 @@ def problem3(n, k):
     p = dec2bin(11)#problem2(n, k)
     q = dec2bin(7) #problem2(n, k)
     N = mult(p, q)
-    E = problem2(n, k)
+    E = dec2bin(randint(n, 1000))
     
     pq = mult(sub(p, [1]), sub(q, [1]))
     i = gcd (E, pq)
     while not bin2dec(i) == 1:
         print("gcd: ", bin2dec(i))
-        E = problem2(n, k)
+        E = dec2bin(randint(n, 1000))
         i = gcd(E, pq)
     print ('E', bin2dec(E))
     print('pq', bin2dec(pq))
@@ -111,19 +111,64 @@ def problem3(n, k):
     return (N, E, D)
 
 def egcd(a, b):
-    if zero(a):
-        return (b, [0], [1])
-    else:
-        p, q = divide(b, a)
-        g, x, y = egcd(q, a)
-        m, r = divide(b, a)
-        k = mult(m, x)
-        l = sub(y, k)
-        return g, l, x
-        
-              
+
+    if zero(b):
+        return ([1], [0], a)
+
+    (q,r) = divide(a,b)
+    (xPrime, yPrime, d) = egcd(b, r)
     
+    productVal = mult(q,yPrime)
+    if compare(yPrime, productVal) == 2:
+        isNegative = True
+        secondArg = sub(productVal, yPrime)
+        #secondArg = sub(yPrime, productVal)
+    else:
+        secondArg = sub(yPrime, productVal)
+        
+        # secondArg = sub(xPrime, productVal)
+    return (xPrime,secondArg,yPrime)
+'''
+   isNegative = False
+    if zero(b):
+        return ( [1], [0], a)
+
+    (q,r) = divide(a,b)
+    (xPrime, yPrime, d) = egcd(b, r)
+    (c, d) = divide(a, b)
+    productVal = mult(c,yPrime)
+    if sub(yPrime, productVal) < 0:
+        print ("is negative")
+        isNegative = True
+        secondArg = sub(productVal, yPrime)
+        #secondArg = sub(yPrime, productVal)
+    else:
+        secondArg = sub(yPrime, productVal)
+    return (xPrime,secondArg,yPrime)
+'''
+def twos_complment(a):
+    for i in range(len(a)):
+        if a[i] & 1 == 1:
+            a[i] = 0
+        else:
+            a[i] = 1
+    a = add(a, [1])
+    return a
+def problem4(N, E, D, M):
+    print("Encrypting M.")
+    y = Mod_Exp_Log(M,E,N)
+    print("Encrypted M = ",y)
+    print("Decrypting M.")
+    decrypted = Mod_Exp_Log(y,D,N)
+    print("Decrypted M = ",decrypted)
+
 def main2():
+    a = sub(dec2bin(10), dec2bin(7))
+    print(a)
+    a = twos_complment(a)
+    print(a)
+    a = twos_complment(a)
+    print(a)
     # a,b, D = egcd(dec2bin(15), dec2bin(7))
     #print(bin2dec(a), bin2dec(b), bin2dec(D))
     # print (bin2dec(a))
