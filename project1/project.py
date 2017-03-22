@@ -22,13 +22,13 @@
 
 ##########################################################
 
-import random
+#import random
 import sys
 import time
 
 sys.setrecursionlimit(10000000)
 
-from random import *
+#from random import *
 
 def shift(A, n):
     if n == 0:
@@ -331,7 +331,7 @@ main()
 
 
 
-
+s
 
 
 
