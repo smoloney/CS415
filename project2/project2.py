@@ -1,4 +1,3 @@
-import numpy as np
 from project import *
 from random import *
 
@@ -112,14 +111,16 @@ def problem3(n, k):
 
 def egcd(a, b):
 
-    if zero(b):
-        return ([1], [0], a)
+    if zero(a):
+        return ([1], [0], b)
 
     (q,r) = divide(a,b)
     (xPrime, yPrime, d) = egcd(b, r)
     
     productVal = mult(q,yPrime)
-    if compare(yPrime, productVal) == 2:
+    print(yPrime, productVal)
+    if compare(yPrime, productVal) == 0:
+        print("x < y")
         isNegative = True
         secondArg = sub(productVal, yPrime)
         #secondArg = sub(yPrime, productVal)
