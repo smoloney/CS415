@@ -27,12 +27,7 @@ def primality2(n, k):
     a = True
     while(k > 0):
         randInt = randint(2, n-1)
-       # print("Randint", randInt)
-        #print ("leaving primality2")
         r = primality(dec2bin(randInt), dec2bin(n))
-        #print('R', bin2dec(r))
-        
-        #print(q, r)
         if( bin2dec(r) != 1):
             a = False
         k -=1
@@ -43,13 +38,11 @@ def primality(randInt, n):
     return Mod_Exp_Log(randInt,sub(n, [1]), n)
     
 def div_check(n, a):
-    #print(" Entered div check")
     (q, r) = divide(dec2bin(n), dec2bin(a))
     if zero(r):
-     #   print ("R != 0 in div check")
+   
         return False
     else:
-      #  print("Passed div_check")
         return True
 
     
@@ -58,7 +51,7 @@ def Mod_Exp_Log(x, e, m):
     E = e
     Y = [1]
     while not zero(E):
-       # print("e",bin2dec(E))
+       
         (p, q) = divide(E,[0,1])
         if zero(q):
             val = mult(X, X)
@@ -66,13 +59,12 @@ def Mod_Exp_Log(x, e, m):
             X = q
             (p, q) = divide(E,[0,1])
             E = p
-           # print('Y', bin2dec(Y))
         else:
             val = mult(X, Y)
             (p, q) = divide(val, m)
             Y = q
             E = sub(E, [1])
-            #print('Y', bin2dec(Y))
+           
     return Y
 def problem2(n, k):
     isPrime = False
