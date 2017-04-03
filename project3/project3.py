@@ -14,17 +14,20 @@ def checkLength(arrayA, arrayB):
     smaller array
     """
     if(len(arrayA) == len(arrayB)):
+        print("Same")
         return (arrayA, arrayB)
     elif(len(arrayA) > len(arrayB)):
+        print("A > B")
         arrayB = appendZeros(arrayB, len(arrayA) - len(arrayB))
     else:
+        print("B>A")
         arrayA = appendZeros(arrayA, len(arrayB) - len(arrayA))
     return (arrayA, arrayB)
 
 def appendZeros(array2append, n):
     # Appends n number of zeros to an array
-    for i in range(0, n-1):
-        array2append[i].append(0)
+    for i in range(0, n):
+        array2append.append(0)
     return array2append
 
 
@@ -68,10 +71,12 @@ def componentMult (array1, array2):
     it will multiply array1[0] and array2[0] together and then array[1] and array2[1] together
     and place them in a third array at their respective index
     """
+    (array1, array2) = checkLength(array1, array2)
     componentArray = []
-    for i in range (len(array1)):
-        componentArray[i] = array1[i] * array2[i]
-
+    for i in range (0, len(array1)):
+        
+        componentArray.append(array1[i] * array2[i])
+   
     return componentArray
 
 def inverseFFT(array2flip):
@@ -108,5 +113,21 @@ def main():
     print(z.real)
     a=  [float(1), float(-2), float(1), float(5)]
     print(inverseFFT(a))
+    a = [1, 2, 3, 5]
+    b = [1, 2,4,2,1,1,1,1]
+    c = checkLength(a,b)
+    d = [1, 2,3,4,5]
+    f = [1,2,3,4,5, 5]
+    print(c)
+    (evenArray, oddArray) = splitArray(d)
+    print("Evenarray: ", evenArray, "Odd array:",  oddArray)
+    print(componentMult(f, d))
+    """
+    To DO:
+    Figure out what n is in the case of w^n for fft
+    test FFT function
+
+    """
+    
 
 main()
