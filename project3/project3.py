@@ -1,14 +1,18 @@
 """"
 Author: Sean Moloney and Jon Killinger
-
+Class: CS 415
+Assignment: Project 3
+Description: This project implements the FFT algorithm
 """
 import numpy
 import math
 import cmath
 def checkLength(arrayA, arrayB):
-# Checks length of both polynomial arrays, if the same they
-# return original arrays.  Otherwise, 0s are appened to the
-# smaller array
+    """
+    Checks length of both polynomial arrays, if the same they
+    return original arrays.  Otherwise, 0s are appened to the
+    smaller array
+    """
     if(len(arrayA) == len(arrayB)):
         return (arrayA, arrayB)
     elif(len(arrayA) > len(arrayB)):
@@ -18,7 +22,7 @@ def checkLength(arrayA, arrayB):
     return (arrayA, arrayB)
 
 def appendZeros(array2append, n):
-# Appends n number of zeros to an array
+    # Appends n number of zeros to an array
     for i in range(0, n-1):
         array2append[i].append(0)
     return array2append
@@ -39,6 +43,13 @@ def splitArray(array2split):
     return (evenArray, oddArray)
 
 def FFT (a, w):
+    """
+    Input: An array and root of unity
+    Output: FFT of the array
+    Description: This function will take in an array.  It will split the array into two
+    different array based on whether the index is even or odd.  It will then perform FFT
+    on both of these new arrays and put it back together.
+    """
     if w == 1:
         return a
     (evenArray,oddArray) = splitArray(a)
@@ -50,6 +61,13 @@ def FFT (a, w):
     return r
 
 def componentMult (array1, array2):
+    """
+    Input: Two arrays
+    Output: One array
+    Description: This will multiply each element of the two arrays together.  For example
+    it will multiply array1[0] and array2[0] together and then array[1] and array2[1] together
+    and place them in a third array at their respective index
+    """
     componentArray = []
     for i in range (len(array1)):
         componentArray[i] = array1[i] * array2[i]
@@ -57,6 +75,13 @@ def componentMult (array1, array2):
     return componentArray
 
 def inverseFFT(array2flip):
+    """
+    Input: One array
+    Out: Inversed array
+    Description: This function will first check to see if the length of the array is 0,
+    if it is this function will return an empty array.  After this it will flip all of the elements in 
+    the array besides the first element and divide them by the size of the array.
+    """
     if(len(array2flip) == 0):
         return []
     size = len(array2flip)
