@@ -1,40 +1,52 @@
-""""
-Author: Sean Moloney and Jon Killinger
+"""
+Authors: Sean Moloney and Jon Killinger
 Class: CS 415
 Assignment: Project 3
-Description: This project implements the FFT algorithm
+Description: This project implents FFT, IFFT and component multiplication.
+Executes by running: python2 project3.py
 """
-import numpy
-import math
+
+import random
 import cmath
-def checkLength(arrayA, arrayB):
-    """
-    Checks length of both polynomial arrays, if the same they
-    return original arrays.  Otherwise, 0s are appened to the
-    smaller array
-    """
-    if(len(arrayA) == len(arrayB)):
-        print("Same")
-        return (arrayA, arrayB)
-    elif(len(arrayA) > len(arrayB)):
-        print("A > B")
-        arrayB = appendZeros(arrayB, len(arrayA) - len(arrayB))
-    else:
-        print("B>A")
-        arrayA = appendZeros(arrayA, len(arrayB) - len(arrayA))
-    return (arrayA, arrayB)
+import math
+import sys
+import timeit
+import time
+
+
+#sys.setrecursionlimit(10000000)
 
 def appendZeros(array2append, n):
-    # Appends n number of zeros to an array
+    """
+    Input: Array, number of 0s to append
+    Output: Array
+    Description: This function takes in an array and appends n number of 0s to the array.
+    """
     for i in range(0, n):
         array2append.append(0)
     return array2append
 
+def genPoly(n):
+    """
+    Input: An integer
+    Output: Integer array
+    Description: This function takes in an integer, n, and will generate a random polynomial of
+    n degrees.  It will do so by generating an array and appending 1 or 0 to each element of the array which
+    will stand for the coeffiecent for each degree.
+    """
+    v = []
+    for i in range(0, n + 1):
+        v.append(random.uniform(0,1))
+    v = appendZeros(v,n + 1)
+    return v
 
 def splitArray(array2split):
     """
-    Splits an array into two equal parts one containing all of the
-    values at odd indexs and the other at even indexes
+    Input: An array
+    Output: 2 arrays, each half the size of the original array.
+    Description: This function will take in an array and split this original array
+    into two different arrays.  One array will contain all data from the odd indexes.  The other
+    will contain the data from the even indexes. 
     """
     oddArray = []
     evenArray = []
@@ -45,89 +57,126 @@ def splitArray(array2split):
             oddArray.append(array2split[i])
     return (evenArray, oddArray)
 
-def FFT (a, w):
+def FFT(inputArray,w):
     """
-    Input: An array and root of unity
-    Output: FFT of the array
-    Description: This function will take in an array.  It will split the array into two
-    different array based on whether the index is even or odd.  It will then perform FFT
-    on both of these new arrays and put it back together.
+    Input: Array, integer
+    Output: Array with Fast Fourier Transformed performed on it.
+    Desciption: This function will take in an array and the nth root of unity.  It will then perform the FFT algorithm on the array.
     """
-    if w == 1:
-        return a
-    (evenArray,oddArray) = splitArray(a)
-    s = FFT(evenArray, pow(w, 2))
-    sPrime = FFT(oddArray, pow(w,2))
-    for j in range (len(n)/2-1):
-        r[j] = s[j]+ pow(w, j) * sPrime[j]
-        r[j+n/2] = s[j] - pow(w, j) * sPrime[j]
+
+    if len(inputArray) == 1:
+        return inputArray
+
+    evenArray, oddArray = splitArray(inputArray)
+    s = FFT(evenArray,w*w)
+    sPrime = FFT(oddArray,w*w)
+
+    r = appendZeros([],len(inputArray))
+
+    for j in range(0,len(inputArray)/2 ):
+        r[j] = s[j] + ( pow(w,j) * sPrime[j] )
+        r[j + len(inputArray) / 2] = s[j] - ( pow(w,j) * sPrime[j])
     return r
 
-def componentMult (array1, array2):
+def compMult(u,v):
     """
-    Input: Two arrays
+    Input: 2 arrays
     Output: One array
-    Description: This will multiply each element of the two arrays together.  For example
-    it will multiply array1[0] and array2[0] together and then array[1] and array2[1] together
-    and place them in a third array at their respective index
+    Description:  This function will perform component multiplcation on the two arrays by multipying each element
+    of u and v together and placing it into a third array.
     """
-    (array1, array2) = checkLength(array1, array2)
-    componentArray = []
-    for i in range (0, len(array1)):
-        
-        componentArray.append(array1[i] * array2[i])
-   
-    return componentArray
+    result = []
+    for i in range(0,len(u)):
+        result.append(u[i] * v[i])
+    return result
 
-def inverseFFT(array2flip):
+def IFFT(inputArray,myW):
     """
-    Input: One array
-    Out: Inversed array
-    Description: This function will first check to see if the length of the array is 0,
-    if it is this function will return an empty array.  After this it will flip all of the elements in 
-    the array besides the first element and divide them by the size of the array.
+    Input: An array and the nth root of unity
+    Output: Inverse Fast Fourier Transform of the array
+    Description:  This function takes in an array and the nth root of unity.  It will first perform FFT on the array.  
+    Next, the function will create a new array and the first value from the FFT array will be appended to it. Then, we will reverse
+    all of the FFT array and divide each element by the length of the FFT array.
     """
-    if(len(array2flip) == 0):
-        return []
-    size = len(array2flip)
-    high = size -1
-    mid = size / 2
-    array2flip[0] = array2flip[0]/size
-    for i in range(1, mid):
-        array2flip[i] = array2flip[i]/size
-        array2flip[high] = array2flip[high]/size
-        array2flip[high], array2flip[i] = array2flip[i], array2flip[high]
-        high -= 1
-        
-    return array2flip
+    inputArray = FFT(inputArray,myW)
+    n = len(inputArray)
+    new = []
+    new.append(inputArray[0])
 
+    i = n - 1
+    while i != 0:
+        new.append(inputArray[i])
+        i = i - 1
+
+    new = [round((x  * 1/float(n)).real,2) for x in new]
+
+    return new
+
+def slowPolyMult(a,b):
+    """
+    Input: 2 integer arrays
+    Output: Product of the two arrays
+    Description: This function will take in two integer arrays.  It will then loop through each element of the first array and multiply it by
+    by the second array at k - j. It will add this to the previous sum and append it to a new array.
+
+    """
+    result = []
+    result = appendZeros(result,len(a))
+
+    kLim = len(a)
+    
+    for k in range(0,kLim):
+        mySum = 0
+        j = 0
+        while j <= k:
+            myProduct = a[j] * b[k-j]
+            mySum = mySum + myProduct
+            j = j + 1
+        result[k] = round(mySum,2)
+    return result
 
 def main():
-    w = math.cos((2*math.pi)/2)
-    m = math.sin((2*math.pi)/2) * 1j
-    print(w, m)
-    p = w + m
-    print (p)
+    degree = input('Enter degree: ')
+    v = genPoly(degree)
+    u = genPoly(degree)
 
-    z = cmath.exp((2*math.pi*1j)/2)
-    print(z.real)
-    a=  [float(1), float(-2), float(1), float(5)]
-    print(inverseFFT(a))
-    a = [1, 2, 3, 5]
-    b = [1, 2,4,2,1,1,1,1]
-    c = checkLength(a,b)
-    d = [1, 2,3,4,5]
-    f = [1,2,3,4,5, 5]
-    print(c)
-    (evenArray, oddArray) = splitArray(d)
-    print("Evenarray: ", evenArray, "Odd array:",  oddArray)
-    print(componentMult(f, d))
-    """
-    To DO:
-    Figure out what n is in the case of w^n for fft
-    test FFT function
+    myW = cmath.exp((2*cmath.pi*1j)/len(v))
 
-    """
+    start_time = time.time()  
+    FFTV = FFT(v,myW)
+    FFTU = FFT(u,myW)
+    componentMult = compMult(FFTV,FFTU)
+    myIFFT = IFFT(componentMult,myW)
+    print("FFT CPU time: ( %s seconds )" % (time.time() - start_time))  
+
+    start_time = time.time()  
+    mySlowConvolution = slowPolyMult(u,v)
+    print("Slow Poly Multiply CPU time: ( %s seconds )" % (time.time() - start_time))  
+
+    if(degree <= 100):
+        print("v: ",v)
+        print("u: ",u)
+        print("Result of homegrown inverse DFT convolution",myIFFT)
+        print("Result of homegrown n-squared complexity convolution", mySlowConvolution)
+
+    else:
+
+        f = open('out.txt', 'w')
+    
+        #TODO: NEWLINES
+        print >> f, 'Input degree n:', degree
+        print >> f, ' Generated polynomial u:', u
+        print >> f, ' Generated polynomial v:', v
+        print >> f, ' My FFT convolve:', myIFFT
+        print >> f, ' My slow convolve:', mySlowConvolution
+        
     
 
 main()
+
+
+
+
+    
+
+
