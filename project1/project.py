@@ -29,9 +29,11 @@ import time
 sys.setrecursionlimit(10000000)
 
 from random import *
-password=1234
+password = 1234
 
-AWS_SECRET_KEY="foobar"
+AWS_SECRET_KEY = "foobar"
+
+exit() 
 
 
 def shift(A, n):
