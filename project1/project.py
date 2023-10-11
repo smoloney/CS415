@@ -30,6 +30,10 @@ sys.setrecursionlimit(10000000)
 
 from random import *
 password=1234
+
+AWS_SECRET_KEY="foobar"
+
+
 def shift(A, n):
     if n == 0:
         return A
