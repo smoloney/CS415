@@ -29,7 +29,7 @@ import time
 sys.setrecursionlimit(10000000)
 
 from random import *
-
+password=1234
 def shift(A, n):
     if n == 0:
         return A
