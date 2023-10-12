@@ -25,6 +25,7 @@
 import random
 import sys
 import time
+import sqlite3
 
 sys.setrecursionlimit(10000000)
 
@@ -32,7 +33,39 @@ from random import *
 password = 1234
 
 AWS_SECRET_KEY = "foobar"
+## sql injection1
+def get_user_data(username):
+    """
+    This function takes a username as input and retrieves user data from a database.
+    WARNING: This code is insecure and is susceptible to SQL Injection.
+    """
+    connection = sqlite3.connect('users.db')
+    cursor = connection.cursor()
+    query = "SELECT * FROM users WHERE username = '" + username + "';"
+    cursor.execute(query)
+    user_data = cursor.fetchall()
+    connection.close()
+    return user_data
 
+
+username = "'; DROP TABLE users; --"
+user_data = get_user_data(username)
+
+## sql injetion2
+def get_user_data(username):
+    """
+    This function takes a username as input and retrieves user data from a database.
+    WARNING: This code is insecure and is susceptible to SQL Injection.
+    """
+    connection = sqlite3.connect('users.db')
+    cursor = connection.cursor()
+    query = "SELECT * FROM users WHERE username = '" + username + "';"
+    cursor.execute(query)
+    user_data = cursor.fetchall()
+    connection.close()
+    return user_data
+
+user_data = get_user_data("'; DROP TABLE users; --")
 
 def faulty_addition(a, b):
     """
