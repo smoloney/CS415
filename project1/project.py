@@ -33,7 +33,25 @@ password = 1234
 
 AWS_SECRET_KEY = "foobar"
 
-exit() 
+
+def faulty_addition(a, b):
+    """
+    This function attempts to return the sum of a and b,
+    but contains several bugs.
+    """
+    sum = a + b  # 'sum' is a built-in function, overriding it is a bad practice.
+    print(summ)  # Typo: 'summ' is undefined, should be 'sum'.
+    if sum > 10:
+        message = "Sum is greater than 10"
+        print(message)
+    else:
+        print("Sum is less than or equal to 10")
+
+    # Missing return statement.
+    # The function should return 'sum', but it doesn't.
+
+# Usage:
+result = faulty_addition(5, 6)  # This will not assign the sum to 'result' and will raise a NameError due to 'summ'.
 
 
 def shift(A, n):
