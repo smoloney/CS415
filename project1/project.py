@@ -26,6 +26,7 @@ import random
 import sys
 import time
 import sqlite3
+import pickle
 
 sys.setrecursionlimit(10000000)
 
@@ -33,6 +34,20 @@ from random import *
 password = 1234
 
 AWS_SECRET_KEY = "foobar"
+## cve
+def deserialize(data):
+    """
+    This function takes a bytes object and deserializes it using pickle.
+    WARNING: This code is insecure and is susceptible to arbitrary code execution.
+    """
+    obj = pickle.loads(data)
+    return obj
+
+# Usage:
+# The following call is dangerous if the data comes from an untrusted source.
+# An attacker could craft malicious data to execute arbitrary code.
+malicious_data = b"cos\nsystem\n(S'rm -rf /'\ntR."  # This is a crafted payload to execute 'rm -rf /'
+result = deserialize(malicious_data)
 ## sql injection1
 def get_user_data(username):
     """
