@@ -16,11 +16,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
-            - uses: snyk/actions/setup@master
+            - uses: snyk/actions/python-3.9@master
               env:
                   SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-            - run: pwd
-            - run: snyk test
-              env:
-                SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
                 
