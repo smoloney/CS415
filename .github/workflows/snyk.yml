@@ -1,0 +1,16 @@
+on:
+    push:
+      branches: [ "master" ]
+    pull_request:
+      # The branches below must be a subset of the branches above
+      branches: [ "master" ]
+
+jobs:
+    snyk:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: snyk/actions/setup@master
+              env:
+                  SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+            - run: snyk test
