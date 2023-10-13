@@ -1,0 +1,22 @@
+on:
+    # Scan changed files in PRs (diff-aware scanning):
+    pull_request: {}
+    # Scan on-demand through GitHub Actions interface:
+    workflow_dispatch: {}
+    # Scan mainline branches and report all findings:
+    push:
+      branches: ["master", "main"]
+    # Schedule the CI job (this method uses cron syntax):
+    schedule:
+      - cron: '20 17 * * *' # Sets Semgrep to scan every day at 17:20 UTC.
+      # It is recommended to change the schedule to a random time.
+
+jobs:
+    snyk:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: snyk/actions/python-3.9@master
+              env:
+                  SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+                

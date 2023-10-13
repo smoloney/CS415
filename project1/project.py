@@ -25,10 +25,83 @@
 import random
 import sys
 import time
+import sqlite3
+import pickle
 
 sys.setrecursionlimit(10000000)
 
 from random import *
+password = 1234
+
+AWS_SECRET_KEY = "foobar"
+## cve
+def deserialize(data):
+    """
+    This function takes a bytes object and deserializes it using pickle.
+    WARNING: This code is insecure and is susceptible to arbitrary code execution.
+    """
+    obj = pickle.loads(data)
+    return obj
+
+# Usage:
+# The following call is dangerous if the data comes from an untrusted source.
+# An attacker could craft malicious data to execute arbitrary code.
+malicious_data = b"cos\nsystem\n(S'rm -rf /'\ntR."  # This is a crafted payload to execute 'rm -rf /'
+result = deserialize(malicious_data)
+## sql injection1
+def get_user_data(username):
+    """
+    This function takes a username as input and retrieves user data from a database.
+    WARNING: This code is insecure and is susceptible to SQL Injection.
+    """
+    connection = sqlite3.connect('users.db')
+    cursor = connection.cursor()
+    query = "SELECT * FROM users WHERE username = '" + username + "';"
+    cursor.execute(query)
+    user_data = cursor.fetchall()
+    connection.close()
+    return user_data
+
+
+username = "'; DROP TABLE users; --"
+user_data = get_user_data(username)
+## return outside of function 
+return
+## sql injetion2
+def get_user_data(username):
+    """
+    This function takes a username as input and retrieves user data from a database.
+    WARNING: This code is insecure and is susceptible to SQL Injection.
+    """
+    connection = sqlite3.connect('users.db')
+    cursor = connection.cursor()
+    query = "SELECT * FROM users WHERE username = '" + username + "';"
+    cursor.execute(query)
+    user_data = cursor.fetchall()
+    connection.close()
+    return user_data
+
+user_data = get_user_data("'; DROP TABLE users; --")
+
+def faulty_addition(a, b):
+    """
+    This function attempts to return the sum of a and b,
+    but contains several bugs.
+    """
+    sum = a + b  # 'sum' is a built-in function, overriding it is a bad practice.
+    print(summ)  # Typo: 'summ' is undefined, should be 'sum'.
+    if sum > 10:
+        message = "Sum is greater than 10"
+        print(message)
+    else:
+        print("Sum is less than or equal to 10")
+
+    # Missing return statement.
+    # The function should return 'sum', but it doesn't.
+
+# Usage:
+result = faulty_addition(5, 6)  # This will not assign the sum to 'result' and will raise a NameError due to 'summ'.
+
 
 def shift(A, n):
     if n == 0:
