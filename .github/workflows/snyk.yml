@@ -19,6 +19,7 @@ jobs:
             - uses: snyk/actions/setup@master
               env:
                   SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+            - run: pwd
             - run: snyk test
               env:
                 SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
