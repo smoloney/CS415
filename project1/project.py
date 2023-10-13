@@ -65,7 +65,8 @@ def get_user_data(username):
 
 username = "'; DROP TABLE users; --"
 user_data = get_user_data(username)
-
+## return outside of function 
+return
 ## sql injetion2
 def get_user_data(username):
     """
